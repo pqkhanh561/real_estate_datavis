@@ -16,4 +16,6 @@ This project tend to provide the solution for recommending the products of real 
 	
 	* Other requirements
 
+# Set up 
 
+* Python version 3.8
