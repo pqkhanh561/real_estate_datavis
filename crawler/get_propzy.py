@@ -27,11 +27,18 @@ class PropzyCrawler:
     def action(self):
         url = "https://propzy.vn/mua/bat-dong-san/hcm?sortBy=price&sortDirection=ASC&tags=hcm&type=mua"
         self.driver.get(url)
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)
-        btns = self.driver.find_elements(By.XPATH, "//*[@id=\"__next\"]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/div[2]/ul/li[8]/div")
-        btns[0].click()
-        time.sleep(5)
+        while True:
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(3)
+            btns = self.driver.find_elements(By.XPATH, "//*[@id=\"__next\"]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/div[2]/ul/li[8]/div")
+            if len(btns) == 0:
+                btns = self.driver.find_elements(By.XPATH, "//*[@id=\"__next\"]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/div[2]/ul/li[9]/div")
+            if len(btns) == 0:
+                print("Cant get components")
+                time.sleep(100)
+                break
+            btns[0].click()
+            time.sleep(5)
         self.driver.close()
 
     def close(self):
