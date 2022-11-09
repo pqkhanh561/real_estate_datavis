@@ -28,8 +28,24 @@ class PropzyCrawler:
         url = "https://propzy.vn/mua/bat-dong-san/hcm?sortBy=price&sortDirection=ASC&tags=hcm&type=mua"
         self.driver.get(url)
         while True:
+            time.sleep(2)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(3)
+            info_items = self.driver.find_element(By.XPATH, "//*[@id=\"__next\"]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/div[1]")
+            info_items = info_items.find_elements(By.XPATH, "./*")
+            print("Number of items: ", len(info_items))
+            # for item in info_items:
+            #     print(item.text)
+            time.sleep(1)
+            while True:
+                pageHeight = self.driver.execute_script("return document.body.scrollHeight")
+                totalScrolledHeight = self.driver.execute_script("return window.pageYOffset + window.innerHeight")
+                if (pageHeight-1) <= totalScrolledHeight:
+                    break
+                else:
+                    continue
+                    time.sleep(1)
+
+            time.sleep(1)
             btns = self.driver.find_elements(By.XPATH, "//*[@id=\"__next\"]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/div[2]/ul/li[8]/div")
             if len(btns) == 0:
                 btns = self.driver.find_elements(By.XPATH, "//*[@id=\"__next\"]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/div[2]/ul/li[9]/div")
@@ -38,7 +54,6 @@ class PropzyCrawler:
                 time.sleep(100)
                 break
             btns[0].click()
-            time.sleep(5)
         self.driver.close()
 
     def close(self):
