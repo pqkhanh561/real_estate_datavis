@@ -27,10 +27,10 @@ class PropzyCrawler:
         pass
 
     def action(self):
-        url = "https://propzy.vn/mua/bat-dong-san/hcm?sortBy=price&sortDirection=ASC&tags=hcm&type=mua"
+        url = "https://propzy.vn/mua/bat-dong-san/hcm?sortBy=price&sortDirection=DESC&tags=hcm&type=mua"
         self.driver.get(url)
         propzy_df = list()
-        for num_pages in range(1):
+        for num_pages in range(20):
             time.sleep(2)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             info_items = self.driver.find_element(By.XPATH, "//*[@id=\"__next\"]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/div[1]")
@@ -53,8 +53,8 @@ class PropzyCrawler:
                     item_dict['facilities_value'].append(fac.find_element(By.TAG_NAME,"span").text)
                 propzy_df.append(item_dict)
             pd_data = pd.DataFrame(propzy_df)
-            pd_data.to_csv(f"./page_{num_pages}.csv")
-            time.sleep(1)
+            pd_data.to_csv(f"./data/page_{num_pages}.csv")
+            time.sleep(2)
 
             while True:
                 pageHeight = self.driver.execute_script("return document.body.scrollHeight")
