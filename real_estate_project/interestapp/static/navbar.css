@@ -1,0 +1,138 @@
+    ul.form {
+		position:absolute;
+     	left:120px;
+		background:#fff;
+		width:150px;
+        z-index:10;
+		margin:100;
+		padding:0;
+		list-style: none;
+		overflow:hidden;
+		font-weight:700;
+
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+
+		-webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+		-moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+		box-shadow:  10px 0px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.form li a {
+		width:225px;
+		padding-left:15px;
+		height:40px;
+		line-height:40px;
+		display:block;
+		overflow:hidden;
+		position:relative;
+		text-decoration:none;
+		text-transform:uppercase;
+		font-size:12px;
+		color:#686868;
+
+		-webkit-transition:all 0.1s linear;
+		-moz-transition:all 0.1s linear;
+		-o-transition:all 0.1s linear;
+		transition:all 0.2s linear;
+	}
+
+	.form li a:hover {
+		background:#efefef;
+	}
+
+	.form li a.profile {
+		border-left:5px solid #008747;
+	}
+
+	.form li a.messages {
+			border-left:5px solid #fecf54;
+	}
+
+	.form li a.settings {
+			border-left:5px solid #cf2130;
+	}
+
+	.form li a.logout {
+			border-left:5px solid #FF3385;
+	}
+
+	.form li a.western {
+			border-left:5px solid #0099FF;
+	}
+
+	.form li a.fantasy {
+			border-left:5px solid #66FF99;
+	}
+
+	.form li:first-child a:hover, .form li:first-child a {
+		-webkit-border-radius: 5px 5px 0 0;
+		-moz-border-radius: 5px 5px 0 0;
+		border-radius: 5px 5px 0 0;
+	}
+
+	.form li:last-child a:hover, .form li:last-child a {
+		-webkit-border-radius: 0 0 5px 5px;
+		-moz-border-radius: 0 0 5px 5px;
+		border-radius: 0 0 5px 5px;
+	}
+
+	.form li a:hover i {
+		color:#ea4f35;
+	}
+
+	.form i {
+		margin-right:15px;
+
+		-webkit-transition:all 0.2s linear;
+		-moz-transition:all 0.2s linear;
+		-o-transition:all 0.2s linear;
+		transition:all 0.2s linear;
+	}
+
+	.form em {
+		font-size: 10px;
+		background: #ea4f35;
+		padding: 3px 5px;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+		font-style: normal;
+		color: #fff;
+		margin-top: 17px;
+		margin-right: 15px;
+		line-height: 10px;
+		height: 10px;
+		float:right;
+	}
+
+	.form li.selected a {
+		background:#efefef;
+	}
+
+	h1 {
+		color:#686868;
+		margin:0 auto;
+		margin-top:120px;
+		margin-bottom:40px;
+		font-size:30px;
+		width:300px;
+		text-align:center;
+	}
+	h3 {
+		color:#686868;
+		margin-top:70px;
+		margin-bottom:20px;
+		text-align: center;
+		font-size:25px;
+		width:600px;
+		text-transform:uppercase;
+	}
+	p {
+		color:#686868;
+		font-size:14px;
+		width: 600px;
+		text-align: left;
+		font-weight:600;
+	}

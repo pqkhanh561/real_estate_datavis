@@ -1,0 +1,75 @@
+    .card-body {
+        font-size: 11pt;
+        font-family: Arial;
+        border-collapse: collapse;
+        margin-left:20px
+    }
+
+    .card-body td, th {
+      padding: 7px 10px;
+
+    }
+
+    .card-body tr:nth-child(even) {
+      background: #E0E0E0;
+    }
+
+    .card-body tr:hover {
+      background: silver;
+      cursor: pointer;
+    }
+
+    .summary-body {
+      color: #686868;
+      font-size: 11pt;
+      font-family: Arial;
+      border-collapse: collapse;
+      margin-left:20px;
+    }
+
+    .summary-body td, th {
+      padding: 5px 10px;
+    }
+
+    .summary-body tr:nth-child(even) {
+      background: #E0E0E0;
+    }
+
+    .row {
+      display: flex;
+      margin-left: 40px;
+      font-family: Quicksand;
+      font-weight: 700;
+      color: #686868;
+      font-size: 14px;
+      width: 370px;
+      height:50px;
+    }
+
+    .column {
+      flex: 50%;
+      margin-left: 40px;
+    }
+
+    input[type=submit]{
+      font-family: Quicksand;
+      font-size: 14px;
+      font-weight:700;
+      color: #686868;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .myclass {
+      font-family: Quicksand;
+      width: 260px;
+      height:23px;
+    }
+
+    .loaihinhclass{
+      font-family: Quicksand;
+      width: 270px;
+      font-weight:550;
+      color: #686868;
+      height:30px;
+    }
