@@ -4,16 +4,16 @@ from django.db import models
 class Property(models.Model):
     num_bedroom = models.IntegerField()
     num_bathroom = models.IntegerField()
-    area = models.DecimalField()
+    area = models.DecimalField(max_digits=19, decimal_places=2)
     direction = models.TextField()
     status = models.TextField()
     license = models.TextField()
-    width = models.DecimalField()
-    height = models.DecimalField()
-    road_width = models.DecimalField()  # Do rong hem
+    width = models.DecimalField(max_digits=19, decimal_places=2)
+    height = models.DecimalField(max_digits=19, decimal_places=2)
+    road_width = models.DecimalField(max_digits=19, decimal_places=2)  # Do rong hem
     structure = models.TextField()
     year = models.IntegerField()
-    front_width = models.DecimalField()  # Do rong mat tien duong
+    front_width = models.DecimalField(max_digits=19, decimal_places=2)  # Do rong mat tien duong
 
 
 class Utility(models.Model):
@@ -37,7 +37,7 @@ class House(models.Model):
     code = models.IntegerField(primary_key=True)
     name = models.TextField()
     address = models.TextField()
-    total_price = models.DecimalField()
-    unit_price = models.DecimalField()
-    property = Property()
-    utility = Utility()
+    total_price = models.DecimalField(max_digits=19, decimal_places=2)
+    unit_price = models.DecimalField(max_digits=19, decimal_places=2)
+    property = models.ForeignKey('Property', on_delete=models.SET_NULL, null=True)
+    utility = models.ForeignKey('Utility', on_delete=models.SET_NULL, null=True)
