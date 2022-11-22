@@ -1,6 +1,16 @@
 from django.shortcuts import render
+from .forms import HouseFilterInfo
 
-# Create your views here.
+
 def search_view(request):
-
-    return render(request, "search.html", {})
+    filter_form = HouseFilterInfo(request.POST or None)
+    context = None
+    if request.method == "POST": # Press submit filter
+        context = {
+            "filter_form": filter_form
+        }
+    else:
+        context = {
+            "filter_form": filter_form
+        }
+    return render(request, "search.html", context)
