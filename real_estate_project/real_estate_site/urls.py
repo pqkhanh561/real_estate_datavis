@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 from pages.views import home_view
-from interestapp.views import interest_view, bank_view
+from interestapp.views import interest_view, bank_view, tax_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("home/", home_view, name="home"),
+    path("", home_view, name="home"),
     path("laisuat/", interest_view),
     path("tracuu/", bank_view),
+    path("thue/", tax_view),
 ]
