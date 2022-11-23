@@ -31,3 +31,8 @@ class BankForm(forms.Form):
                                        'onchange': 'show_laisuat()'
                                     })
 
+
+class TaxForm(forms.Form):
+    gia_chuyen_nhuong = forms.DecimalField(label="Giá chuyển nhượng", max_digits=15, localize=True)
+
+    gia_chuyen_nhuong.widget.attrs.update({'class': 'myclass'})
