@@ -64,6 +64,9 @@ def handle_property(key, value):
     try:
         return PROPERTY.index(key), int(value)
     except (ValueError, TypeError):
+        if key in ['property_Diện tích sử dụng', 'property_Chiều dài', 'property_Chiều rộng', 'property_Độ rộng hẻm', "property_Độ rộng mặt tiền đường"] and value !=None:
+            value = int(value.split(' ')[0])
+            return PROPERTY.index(key), value
         return PROPERTY.index(key), value
 
 
