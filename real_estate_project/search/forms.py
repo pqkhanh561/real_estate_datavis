@@ -3,7 +3,8 @@ from .models import House
 
 
 class HouseFilterInfo(forms.Form):
-    GEEKS_CHOICES = (
+    NUM_CHOICES = (
+        (None, "Chọn"),
         (1, "1"),
         (2, "2"),
         (3, "3"),
@@ -16,8 +17,8 @@ class HouseFilterInfo(forms.Form):
     start_area = forms.DecimalField(required=False)
     end_area = forms.DecimalField(required=False)
 
-    num_bed = forms.ChoiceField(choices=GEEKS_CHOICES, required=False)
-    num_bath = forms.ChoiceField(choices=GEEKS_CHOICES, required=False)
+    num_bed = forms.ChoiceField(choices=NUM_CHOICES, required=False)
+    num_bath = forms.ChoiceField(choices=NUM_CHOICES, required=False)
 
 
     start_price.widget.attrs.update({'class': 'loaihinhclass'})
