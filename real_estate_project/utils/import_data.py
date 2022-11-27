@@ -80,9 +80,9 @@ def handle_general(key, value):
         return 1, value
     if key == "total_price":
         if value.split(' ')[1].lower() == "tỷ":
-            return DB_HOUSE.index(key), float(value.split(' ')[0].replace(',', '.'))*1000
+            return DB_HOUSE.index(key), int(float(value.split(' ')[0].replace(',', '.'))*1000)
         else:
-            return DB_HOUSE.index(key), float(value.split(' ')[0].replace(',', '.'))
+            return DB_HOUSE.index(key), int(value.split(' ')[0].replace(',', '.'))
     return DB_HOUSE.index(key), value
 
 
@@ -133,8 +133,8 @@ if __name__ == '__main__':
             try:
                 ConnectionCursor.execute(
                     f"INSERT INTO search_house({db_house_str}) VALUES ({value_house_str})")
-            except sqlite3.IntegrityError as e:
-                print(e)
+            except Exception as e:
+                print(value_house_str)
                 continue
             # Property insert database
             db_property_str = f"{DB_PROPERTY}".replace("[", '').replace("]", '').replace("'", '')

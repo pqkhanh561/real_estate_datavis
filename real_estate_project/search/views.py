@@ -13,11 +13,11 @@ def handle_post_search(**kwargs):
     global PRICE_SHOW
     PRICE_SHOW = []
     try:
-        start_price = float(kwargs.get("start_price"))
+        start_price = int(kwargs.get("start_price"))
     except TypeError:
         start_price = ''
     try:
-        end_price = float(kwargs.get("end_price"))
+        end_price = int(kwargs.get("end_price"))
     except TypeError:
         end_price = ''
 
