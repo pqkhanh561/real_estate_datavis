@@ -2,6 +2,7 @@
 
 {% block content %}
     {% load static %}
+
     <link rel="stylesheet" href="{% static 'search.css' %}">
 
     <div class="container">
@@ -52,44 +53,105 @@
     </div>
    </div>
 
-
+<!--    Item-->
     <div class="container">
       <div class="row justify-content-start">
-        {% for house in page.object_list %}
+        {% for price, house in page.object_list %}
             {% with house.code|stringformat:"s" as house_code %}
             {% with "./images/"|add:house_code|add:".jpg" as image_path %}
-            <div class="col-4 estate-item">
-                <span><img src="{% static image_path %}" width="100%" height="188px"></span>
-                <div>
-                    <span class="price">{{ house.total_price }}</span>
-                    <h3 class="estate-name"> {{ house.name }} </h3>
-                    <p class="estate-address">{{ house.address }} </p>
-                    <div>
-                        {% if house.property.num_bedroom != None %}
-                            <i class="fa-solid fa-bed"></i>
-                            {{house.property.num_bedroom}}
-                        {% endif %}
-                        {% if house.property.num_bathroom != None %}
-                            <i class="fa-solid fa-bath"></i>
-                            {{ house.property.num_bathroom }}
-                        {% endif %}
-                        {% if house.property.area != None %}
-                            <i class="fa-solid fa-square"></i>
-                            {{ house.property.area }}m<sup>2</sup>
-                        {% endif %}
-                        {% if house.property.direction != None %}
-                            <i class="fa-solid fa-location-arrow"></i>
-                            {{ house.property.direction }}
-                        {% endif %}
+
+<!--          Main page item-->
+            <div class="col-4">
+                <a style="color: #000000;text-decoration: none;" data-toggle="modal" href="#{{house_code}}">
+                    <div class="estate-item">
+                        <span><img src="{% static image_path %}" width="100%" height="188px"></span>
+                        <div>
+                            <span class="price">{{ price}}</span>
+                            <h3 class="estate-name"> {{ house.name }} </h3>
+                            <p class="estate-address">{{ house.address }} </p>
+                            <div>
+                                {% if house.property.num_bedroom != None %}
+                                    <i class="fa-solid fa-bed " style="padding-left: 10px;"></i>
+                                    {{house.property.num_bedroom}}
+                                {% endif %}
+                                {% if house.property.num_bathroom != None %}
+                                    <i class="fa-solid fa-bath" style="padding-left: 10px;"></i>
+                                    {{ house.property.num_bathroom }}
+                                {% endif %}
+                                {% if house.property.area != None %}
+                                    <i class="fa-solid fa-square" style="padding-left: 10px;"></i>
+                                    {{ house.property.area }}m<sup>2</sup>
+                                {% endif %}
+                                {% if house.property.direction != None %}
+                                    <i class="fa-solid fa-location-arrow" style="padding-left: 10px;"></i>
+                                    {{ house.property.direction }}
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </a>
 <!--              <input type="checkbox" id="scales" name="scales" unchecked>-->
             </div>
+
+              <!-- Modal -->
+            <div class="modal fade" id={{house_code}} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">{{ house.name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <span><img src="{% static image_path %}" width="25%" height="188px"></span>
+                    <div class="details-general">
+                        <p class="details-price">{{price}}</p>
+                        <br>Địa chỉ: <span class="details-address">{{ house.address }}</span>
+                    </div>
+                    <div class="details-general-utils">
+                        {% if house.property.num_bedroom != None %}
+                            <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                <i class="fa-solid fa-bed " style="padding-left: 10px;"></i>
+                                {{house.property.num_bedroom}}
+                            </div>
+                        {% endif %}
+                        {% if house.property.num_bathroom != None %}
+                            <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                <i class="fa-solid fa-bath" style="padding-left: 10px;"></i>
+                                {{ house.property.num_bathroom }}
+                            </div>
+                        {% endif %}
+                        {% if house.property.area != None %}
+                            <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                <i class="fa-solid fa-square" style="padding-left: 10px;"></i>
+                                {{ house.property.area }}m<sup>2</sup>
+                            </div>
+                        {% endif %}
+                        {% if house.property.direction != None %}
+                            <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                <i class="fa-solid fa-location-arrow" style="padding-left: 10px;"></i>
+                                {{ house.property.direction }}
+                            </div>
+                        {% endif %}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
             {% endwith %}
             {% endwith %}
         {% endfor %}
       </div>
     </div>
+
 
     <div class="container" style="margin-bottom: 100px;">
         <div class="row justify-content-center">
@@ -138,5 +200,4 @@
 
         </div>
     </div>
-
 {% endblock %}

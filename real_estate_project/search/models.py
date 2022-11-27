@@ -37,7 +37,7 @@ class House(models.Model):
     code = models.IntegerField(primary_key=True)
     name = models.TextField()
     address = models.TextField()
-    total_price = models.TextField()
+    total_price = models.IntegerField()
     unit_price = models.TextField(null=True)
     property = models.ForeignKey('Property', on_delete=models.SET_NULL, null=True)
     utility = models.ForeignKey('Utility', on_delete=models.SET_NULL, null=True)

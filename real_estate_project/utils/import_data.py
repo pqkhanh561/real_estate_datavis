@@ -78,6 +78,11 @@ def handle_general(key, value):
         return 0, int(value)
     if key == "item_name":
         return 1, value
+    if key == "total_price":
+        if value.split(' ')[1].lower() == "tỷ":
+            return DB_HOUSE.index(key), float(value.split(' ')[0].replace(',', '.'))*1000
+        else:
+            return DB_HOUSE.index(key), float(value.split(' ')[0].replace(',', '.'))
     return DB_HOUSE.index(key), value
 
 
@@ -93,7 +98,6 @@ if __name__ == '__main__':
     ConnectionCursor.execute("SELECT * FROM search_property")
     num_property_fields = len(ConnectionCursor.description)
     field_names = [i[0] for i in ConnectionCursor.description]
-    print(field_names)
     ConnectionCursor.execute("SELECT * FROM search_house")
     num_house_fields = len(ConnectionCursor.description)
 
@@ -130,7 +134,7 @@ if __name__ == '__main__':
                 ConnectionCursor.execute(
                     f"INSERT INTO search_house({db_house_str}) VALUES ({value_house_str})")
             except sqlite3.IntegrityError as e:
-                print(value_house_str)
+                print(e)
                 continue
             # Property insert database
             db_property_str = f"{DB_PROPERTY}".replace("[", '').replace("]", '').replace("'", '')

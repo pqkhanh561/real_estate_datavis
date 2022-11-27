@@ -1,40 +1,3 @@
-    .card-body {
-        font-size: 11pt;
-        font-family: Arial;
-        border-collapse: collapse;
-        margin-left:20px
-    }
-
-    .card-body td, th {
-      padding: 7px 10px;
-
-    }
-
-    .card-body tr:nth-child(even) {
-      background: #E0E0E0;
-    }
-
-    .card-body tr:hover {
-      background: silver;
-      cursor: pointer;
-    }
-
-    .summary-body {
-      color: #686868;
-      font-size: 11pt;
-      font-family: Arial;
-      border-collapse: collapse;
-      margin-left:20px;
-    }
-
-    .summary-body td, th {
-      padding: 5px 10px;
-    }
-
-    .summary-body tr:nth-child(even) {
-      background: #E0E0E0;
-    }
-
     input[type=submit]{
       font-family: Quicksand;
       font-size: 14px;
@@ -44,22 +7,19 @@
       margin-top: 15px;
     }
 
-    .myclass {
-      font-family: Quicksand;
-      width: 260px;
-      height:23px;
-    }
-
     .price {
+      padding-left: 10px;
       font-size: 21px;
       font-weight: 600;
-      line-height: 24px;
+      line-height: 40px;
       letter-spacing: -0.01em;
       margin-right: 12px;
       text-align: left;
+      margin-bottom: 10px;
     }
 
     .estate-name {
+      padding-left: 10px;
       font-size: 14px;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -69,6 +29,7 @@
     }
 
     .estate-address {
+      padding-left: 10px;
       font-size: 14px;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -91,8 +52,14 @@
     .estate-item {
         margin-top: 25px;
         margin-bottom: 25px;
-        background: white;
-        border-radius: 5px;
+
+        background: rgb(255, 255, 255);
+        box-shadow: rgb(0 0 0 / 15%) 0px 4px 13px 0px;
+        border-radius: 8px;
+        height: 350px;
+        vertical-align: top;
+        overflow: hidden;
+        position: relative;
     }
 
     .page_item {
@@ -132,4 +99,29 @@
     }
 
     .row {
+    }
+
+    .details-price {
+        font-weight: 700;
+        font-size: 30px;
+        color: rgb(36, 41, 51);
+        margin: 0px;
+        line-height: 32px;
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        font-size: 30px;
+    }
+
+    .details-general-utils {
+        display: flex;
+        padding: 14px 8px;
+        border-top: 1px solid rgb(219, 219, 219);
+        border-bottom: 1px solid rgb(219, 219, 219);
     }
