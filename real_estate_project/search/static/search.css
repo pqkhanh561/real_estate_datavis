@@ -125,3 +125,24 @@
         border-top: 1px solid rgb(219, 219, 219);
         border-bottom: 1px solid rgb(219, 219, 219);
     }
+
+    .details-estate {
+    }
+
+    .details-estate-item {
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        align-items: center;
+        float: left;
+        margin-left: 30px;
+    }
+
+    .modal-content {
+        width: 60%;
+    }
+
+    .details-general {
+        margin-bottom: 10px;
+    }

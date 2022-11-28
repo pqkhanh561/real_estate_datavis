@@ -20,6 +20,9 @@ class HouseFilterInfo(forms.Form):
     num_bed = forms.ChoiceField(choices=NUM_CHOICES, required=False)
     num_bath = forms.ChoiceField(choices=NUM_CHOICES, required=False)
 
+    compare_no1 = forms.CharField(required=False)
+    compare_no2 = forms.CharField(required=False)
+
 
     start_price.widget.attrs.update({'class': 'loaihinhclass'})
     end_price.widget.attrs.update({'class': 'loaihinhclass'})

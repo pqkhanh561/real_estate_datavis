@@ -18,7 +18,22 @@
 
     <title>Real Estate App</title>
     {% include 'navbar.html' %}
-
+    <script type="text/javascript">
+        function registerCompare(code) {
+            if (document.getElementById("id_compare_no1").value != '' && document.getElementById("id_compare_no2").value != '') {
+               document.getElementById("id_compare_no1").value = '';
+               document.getElementById("id_compare_no2").value = '';
+            }
+            if (document.getElementById("id_compare_no1").value == '') {
+                document.getElementById("id_compare_no1").value = code;
+            } else {
+                document.getElementById("id_compare_no2").value = code;
+            }
+            if (document.getElementById("id_compare_no1").value != '' && document.getElementById("id_compare_no2").value != '') {
+                document.getElementById("backend_form").submit();
+            }
+        }
+    </script>
 </head>
 <body>
   <div id="content", name="content", class="main">
