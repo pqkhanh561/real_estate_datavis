@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'detail.css' %}">
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script id="rendered-js">
+        function updateTextView(_obj){
+            var num = getNumber(_obj.val());
+            if(num==0){
+                _obj.val('');
+            }else{
+            _obj.val(num.toLocaleString());
+            }
+        }
+        function getNumber(_str){
+            var arr = _str.split('');
+            var out = new Array();
+            for(var cnt=0;cnt<arr.length;cnt++){
+                if(isNaN(arr[cnt])==false){
+                    out.push(arr[cnt]);
+                }
+            }
+        return Number(out.join(''));
+        }
+
+        $(document).ready(function(){
+            $('input[id=id_gia_chuyen_nhuong]').on('keyup',function(){
+            updateTextView($(this));
+        });
+       });
+
+        $(document).ready(function(){
+            $('input[id=id_gia_dat]').on('keyup',function(){
+            updateTextView($(this));
+        });
+       });
+
+       $(document).ready(function(){
+            $('input[id=id_dien_tich]').on('keyup',function(){
+            updateTextView($(this));
+        });
+       });
+     </script>
+
+    <h3>Thuế phí khi mua bán nhà đất</h3>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ tax_form.as_p }}
+
+        <input type="hidden" name="form_type" value="thuephi">
+        <p style="text-align:center"><input type="Submit" name="thuephi" value="Tính thuế và phí"/></p>
+    </form>
+        {% if thuebutton == "Tính thuế và phí" %}
+            <div class="summary-body" style="margin-top: 30px">
+                <p style="height: 20px; text-align:left;">Thuế thu nhập cá nhân: <span style="font-size: 16px; color: green">{{thue_thu_nhap}}</span> VND</p>
+            </div>
+            <div class="summary-body">
+            {{ phi_table | safe }}
+            </div>
+            <ul style="margin-top: 40px, font-family: Quicksand; font-size: 12px;">
+                <li>Thuế thu nhập cá nhân = Giá chuyển nhượng x 2%</li>
+                <li>Lệ phí trước bạ = Giá tính lệ phí trước bạ x 0.5%
+                    <br>
+                    Thông thường được tính bằng 0,5% x Tổng số tiền trong hợp đồng.
+                </li>
+                <li>Lệ phí thẩm định 0,15% giá trị chuyển nhượng (tối thiểu 100.000 đồng, tối đa 5.000.000 đồng).</li>
+                <li>Lệ phí công chứng, được xác định theo giá trị tài sản hoặc giá trị hợp đồng, giao dịch được quy định
+                    <br>
+                    chi tiết tại Khoản 1, Điều 3 Thông tư liên tịch 62/2013/TTLT-BTC-BTP ngày 13-05-2013.
+                </li>
+                <li>Lệ phí địa chính 15.000 đồng</li>
+                <li>Tham khảo thêm:
+                    <a href="https://thuvienphapluat.vn/chinh-sach-phap-luat-moi/vn/thoi-su-phap-luat/bat-dong-san/40968/tong-hop-cac-loai-thue-phi-le-phi-phai-chiu-khi-mua-ban-nha-dat">
+                        Tổng hợp các loại thuế, phí, lệ phí khi mua bán nhà đất
+                    </a></li>
+            </ul>
+            <script type="text/javascript"src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript"src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+            <script>
+                {% comment %} Initialize DataTable {% endcomment %}
+                $(document).ready(function() {
+                    $('#phi_table').DataTable();
+                } );
+    </script>
+        {% endif %}
+
+{% endblock %}

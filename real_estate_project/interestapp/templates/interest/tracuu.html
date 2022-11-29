@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'detail.css' %}">
+    <h3> Tra cứu lãi suất ngân hàng</h3>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ bank_form.as_p }}
+
+        <div class="showlaisuat">
+            <div class="column">Lãi suất:</div>
+            <div class="column" style="font-size: 16px; color:green;" id="id_lai_suat" >
+                {% if sosanhbutton == "So sánh lãi suất"%}
+                    {{ lai_suat_NH|safe }} %
+                {% endif %}
+            </div>
+            <script>
+                function show_laisuat() {
+                    var x = document.getElementById("mySelect").value;
+                    document.getElementById("id_lai_suat").innerHTML = x + " %";
+            }
+            </script>
+        </div>
+        <input type="hidden" name="form_type" value="sosanh">
+        <p style="text-align:center; height:40px"><input type="Submit" name="sosanh" value="So sánh lãi suất"/></p>
+        </form>
+        {% if sosanhbutton == "So sánh lãi suất" %}
+            {{ chart|safe }}
+            <div style="margin-left: 40px">
+                <p>Ngân hàng <span style="color:green">{{min_ten_NH|safe}}</span> có lãi suất cho vay <span style="color:green">thấp nhất {{min_lai|safe}} % </span></p>
+                <p>Ngân hàng <span style="color:red">{{max_ten_NH|safe}}</span> có lãi suất cho vay <span style="color:red">cao nhất {{max_lai|safe}} % </span></p>
+            </div>
+        {% endif %}
+
+
+{% endblock %}

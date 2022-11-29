@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'search.css' %}">
+
+    <div class="container">
+    <div class="row justify-content-center">
+       <h3> Tìm kiếm sản phẩm </h3>
+        <form action="" id="backend_form" method="POST">
+            {% csrf_token %}
+            <div hidden=hidden">
+                {{filter_form.compare_no1}}
+                {{filter_form.compare_no2}}
+            </div>
+            <div class="filter-form-view" style="">
+                <div>
+                    <div style = "display: flex; justify-content: space-between; width: 570px;">
+                        <div style = "position:relative;">Giá</div>
+                        <div style = "position:relative;">Đơn vị: Triệu</div>
+                    </div>
+                    <div>
+                        {{filter_form.start_price}} - {{filter_form.end_price}}
+                    </div>
+                </div>
+                <div>
+                    <div style = "display: flex; justify-content: space-between; width: 570px;">
+                        <div style = "position:relative;">Điện tích</div>
+                        <div style = "position:relative;">Đơn vị: m<sup>2</sup></div>
+                    </div>
+                    <div>
+                        {{filter_form.start_area}} - {{filter_form.end_area}}
+                    </div>
+                </div>
+                <div>
+                    <div style = "display: flex; justify-content: space-between; width: 570px;">
+                        <div style = "position:relative;">Phòng ngủ</div>
+                    </div>
+                    <div>
+                        {{filter_form.num_bed}}
+                    </div>
+                </div>
+                <div>
+                    <div style = "display: flex; justify-content: space-between; width: 570px;">
+                        <div style = "position:relative;">Phòng tắm</div>
+                    </div>
+                    <div>
+                        {{filter_form.num_bath}}
+                    </div>
+                </div>
+            </div>
+            <div style = "display: flex; justify-content: center; width: 570px;">
+                <input type="submit" value="Tìm kiếm">
+            </div>
+        </form>
+    </div>
+   </div>
+    <script>
+        registerCompare('');
+    </script>
+
+<!--    Item-->
+    <div class="container">
+      <div class="row justify-content-start">
+        {% for price, house, utility in page.object_list %}
+            {% with house.code|stringformat:"s" as house_code %}
+            {% with "./images/"|add:house_code|add:".jpg" as image_path %}
+
+<!--          Main page item-->
+            <div class="col-4">
+                <a style="color: #000000;text-decoration: none;" data-toggle="modal" href="#{{house_code}}">
+                    <div class="estate-item">
+                        <span><img src="{% static image_path %}" width="100%" height="188px"></span>
+                        <div>
+                            <span class="price">{{ price}}</span>
+                            <h3 class="estate-name"> {{ house.name }} </h3>
+                            <p class="estate-address">{{ house.address }} </p>
+                            <div>
+                                {% if house.property.num_bedroom != None %}
+                                    <i class="fa-solid fa-bed " style="padding-left: 10px;"></i>
+                                    {{house.property.num_bedroom}}
+                                {% endif %}
+                                {% if house.property.num_bathroom != None %}
+                                    <i class="fa-solid fa-bath" style="padding-left: 10px;"></i>
+                                    {{ house.property.num_bathroom }}
+                                {% endif %}
+                                {% if house.property.area != None %}
+                                    <i class="fa-solid fa-square" style="padding-left: 10px;"></i>
+                                    {{ house.property.area }}m<sup>2</sup>
+                                {% endif %}
+                                {% if house.property.direction != None %}
+                                    <i class="fa-solid fa-location-arrow" style="padding-left: 10px;"></i>
+                                    {{ house.property.direction }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+<!--              <input type="checkbox" id="scales" name="scales" unchecked>-->
+            </div>
+
+              <!-- Modal -->
+            <div class="modal fade" id={{house_code}} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog-sm" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                        <div style="display:inline">
+                            <h5 class="modal-title">{{ house.name }}</h5>
+                        </div>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div>
+                        <span><img src="{% static image_path %}" width="25%" height="188px"></span>
+                        <div class="details-general">
+                            <p class="details-price">{{price}}</p>
+                            <p> Địa chỉ:</p>
+                            <span class="details-address">{{ house.address }}</span>
+                        </div>
+                        <div class="details-general-utils">
+                            {% if house.property.num_bedroom != None %}
+                                <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                    <i class="fa-solid fa-bed " style="padding-left: 10px;"></i>
+                                    {{house.property.num_bedroom}}
+                                </div>
+                            {% endif %}
+                            {% if house.property.num_bathroom != None %}
+                                <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                    <i class="fa-solid fa-bath" style="padding-left: 10px;"></i>
+                                    {{ house.property.num_bathroom }}
+                                </div>
+                            {% endif %}
+                            {% if house.property.area != None %}
+                                <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                    <i class="fa-solid fa-square" style="padding-left: 10px;"></i>
+                                    {{ house.property.area }}m<sup>2</sup>
+                                </div>
+                            {% endif %}
+                            {% if house.property.direction != None %}
+                                <div style="-webkit-box-flex: 1; flex-grow: 1;">
+                                    <i class="fa-solid fa-location-arrow" style="padding-left: 10px;"></i>
+                                    {{ house.property.direction }}
+                                </div>
+                            {% endif %}
+                        </div>
+    <!--                    Chi tiết bất động sản  -->
+                        <div class="details-estate">
+                            <h5 style="font-weight:bold;">CHI TIẾT BẤT ĐỘNG SẢN</h5>
+                            {% if house.property.num_bedroom != None %}
+                                <div class="details-estate-item">
+                                    <p>Phòng ngủ</p>
+                                    <p>{{house.property.num_bedroom}}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.num_bathroom != None %}
+                                <div class="details-estate-item">
+                                    <p>Phòng Tắm</p>
+                                    <p>{{ house.property.num_bathroom }}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.height != None %}
+                                <div class="details-estate-item">
+                                    <p>Chiều dài</p>
+                                    <p>{{ house.property.height }} m</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.width != None %}
+                                <div class="details-estate-item">
+                                    <p>Chiều rộng</p>
+                                    <p>{{ house.property.width }} m</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.area != None %}
+                                <div class="details-estate-item">
+                                    <p>Diện tích đất</p>
+                                    <p>{{ house.property.area }}m<sup>2</sup></p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.direction != None %}
+                                <div class="details-estate-item">
+                                    <p>Hướng</p>
+                                    <p>{{ house.property.direction }}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.status != None %}
+                                <div class="details-estate-item">
+                                    <p>Hiện trạng nhà</p>
+                                    <p>{{ house.property.status }}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.license != None %}
+                                <div class="details-estate-item">
+                                    <p>Giấy tờ</p>
+                                    <p>{{ house.property.license }}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.structure != None %}
+                                <div class="details-estate-item">
+                                    <p>Kiến trúc nhà</p>
+                                    <p class="word-wrap: break-word;">{{ house.property.structure }}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.road_width != None %}
+                                <div class="details-estate-item">
+                                    <p>Độ rộng hẻm</p>
+                                    <p>{{ house.property.road_width }}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.front_width != None %}
+                                <div class="details-estate-item">
+                                    <p>Độ rộng mặt tiền đường</p>
+                                    <p>{{ house.property.front_width }}</p>
+                                </div>
+                            {% endif %}
+                            {% if house.property.year != None %}
+                                <div class="details-estate-item">
+                                    <p>Năm xây dựng</p>
+                                    <p>{{ house.property.year }}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+
+    <!--                    Chi tiết tiện ích    -->
+                       <div class="details-estate">
+                            <br><h5 style="margin-top:200px; font-weight:bold;">TIỆN ÍCH</h5>
+                           <ul>
+                               {% for u in utility %}
+                               <li>{{ u }}</li>
+                               {% endfor %}
+                           </ul>
+                       </div>
+                      </div>
+                  </div>
+
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registerCompare('{{house.code}}');"> Compare</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            {% endwith %}
+            {% endwith %}
+        {% endfor %}
+      </div>
+    </div>
+
+<!--    Navigation-->
+    <div class="container" style="margin-bottom: 100px;">
+        <div class="row justify-content-center">
+
+        {% if page.has_previous %}
+            <span class="arrow">
+                <a href="?page=1"> <i class="fa-solid fa-angles-left"></i></a>
+            </span>
+            <span class="arrow">
+                    <a href="?page={{ page.previous_page_number }}">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a>
+            </span>
+        {% endif %}
+
+        {% with ''|center:page.paginator.num_pages as range %}
+            {% with page.number|add:"-3" as start_list%}
+            {% with page.number|add:3 as end_list %}
+                {% for i in range %}
+                    {% if forloop.counter < end_list and forloop.counter > start_list %}
+                        {% if forloop.counter == page.number %}
+                            <div class="page_item">
+                                <a href="?page={{ forloop.counter }}" style="color:red" >{{ forloop.counter }} </a>
+                            </div>
+                        {% else %}
+                            <div class="page_item">
+                                <a href="?page={{ forloop.counter }}" style="color:black" >{{ forloop.counter }} </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+            {% endwith %}
+        {% endwith %}
+
+        {% if page.has_next %}
+            <span class="arrow">
+                    <a href="?page={{ page.next_page_number }}">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+            </span>
+            <span class="arrow">
+                    <a href="?page={{ page.paginator.num_pages }}"><i class="fa-solid fa-angles-right"></i> </a>
+            </span>
+        {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
