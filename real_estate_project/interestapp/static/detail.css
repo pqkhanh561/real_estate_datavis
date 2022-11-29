@@ -35,7 +35,7 @@
       background: #E0E0E0;
     }
 
-    .row {
+    .showlaisuat {
       display: flex;
       margin-left: 40px;
       font-family: Quicksand;
@@ -43,7 +43,7 @@
       color: #686868;
       font-size: 14px;
       width: 370px;
-      height:50px;
+      height:20px;
     }
 
     .column {

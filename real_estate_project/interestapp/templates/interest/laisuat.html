@@ -39,6 +39,8 @@
         <p colspan="2" style="text-align:center"><input type="Submit" name="laisuat" value="Xem kết quả"/></p>
     </form>
     {% if submitbutton == "Xem kết quả" %}
+        {{ chart_1|safe }}
+        {{ chart_2|safe }}
     <!-- DataTable content -->
     <div class="summary-body">
         {{ summary_table | safe }}
