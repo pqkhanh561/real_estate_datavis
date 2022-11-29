@@ -7,10 +7,7 @@ from .models import House, Property, Utility
 
 DATA_SEARCH = None
 PRICE_SHOW = []
-UTILITY = []
 FILTER_FORM = None
-ITEM1 = None
-ITEM2 = None
 
 
 def handle_post_search(**kwargs):
@@ -47,14 +44,14 @@ def handle_post_search(**kwargs):
         filter_input.pop(k)
     houses = House.objects.select_related().filter(**filter_input)
     for h in houses:
-        if float(h.total_price) / 1000 > 1:
+        if float(h.total_price) / 1000 >= 1:
             PRICE_SHOW.append(str(round(float(h.total_price) / 1000, 1)) + ' tỷ')
         else:
             PRICE_SHOW.append(str(round(float(h.total_price), 1)) + ' triệu')
     return houses
 
 
-def get_utility():
+def get_utility(database):
     UTILITY = [
         "ID",
         "utility_Gần chợ, siêu thị",
@@ -79,7 +76,7 @@ def get_utility():
         'near_park', 'parking', 'through_road', 'fast_trade', 'open_house', 'two_small_roads', 'two_roads'
     ]
     ret = []
-    for data in DATA_SEARCH:
+    for data in database:
         utility = data.utility.__dict__
         utility_array = []
         for k, v in utility.items():
@@ -90,17 +87,63 @@ def get_utility():
     return ret
 
 
-def handle_compare_item(code1, code2):
-    global ITEM1
-    global ITEM2
-    ITEM1 = House.objects.select_related().filter(code=int(code1.replace(',', '')))
-    ITEM2 = House.objects.select_related().filter(code=int(code2.replace(',', '')))
 
+def get_property(database):
+    PROPERTY = [
+        "ID",
+        "property_Phòng ngủ",
+        "property_Phòng tắm",
+        "property_Diện tích sử dụng",
+        "property_Hướng",
+        "property_Hiện trạng nhà",
+        "property_Giấy tờ",
+        "property_Chiều dài",
+        "property_Chiều rộng",
+        "property_Độ rộng hẻm",
+        "property_Kết cấu nhà",
+        "property_Năm xây dựng",
+        "property_Độ rộng mặt tiền đường"
+    ]
+    DB_PROPERTY = ['id', 'num_bedroom', 'num_bathroom', 'area',
+                   'direction', 'status', 'license', 'width', 'height',
+                   'road_width', 'structure', 'year', 'front_width']
+    ret = []
+    for prop_index, prop_name in enumerate(PROPERTY):
+        if prop_name == "ID":
+            continue
+        values = {'name': prop_name.split('_')[1]}
+        for i, data in enumerate(database):
+            try:
+                if "None" in data.property.__dict__.get(DB_PROPERTY[prop_index]):
+                    values.update({f"value{i}": "None"})
+                    continue
+            except TypeError:
+                pass
+            values.update({f"value{i}": data.property.__dict__.get(DB_PROPERTY[prop_index])})
+        ret.append(values)
+    return ret
 
-def compare_view(request):
-    # return HttpResponse("www.google.com")
-    # return request, "www.google.com"
-    return render(request, "compare.html")
+def compare_view(request, code1, code2):
+    item1 = House.objects.select_related().filter(code=int(code1.replace(',', '')))[0]
+    item2 = House.objects.select_related().filter(code=int(code2.replace(',', '')))[0]
+    print("Compare {} - {}", item1.code, item2.code)
+    price = []
+    #TODO: refactor this
+    if float(item1.total_price) / 1000 > 1:
+        price.append(str(round(float(item1.total_price) / 1000, 1)) + ' tỷ')
+    else:
+        price.append(str(round(float(item1.total_price), 1)) + ' triệu')
+    if float(item2.total_price) / 1000 > 1:
+        price.append(str(round(float(item2.total_price) / 1000, 1)) + ' tỷ')
+    else:
+        price.append(str(round(float(item2.total_price), 1)) + ' triệu')
+    return render(request, "compare.html",
+                  {'item1': item1,
+                   'item2': item2,
+                   'price': price,
+                   'property': get_property([item1, item2]),
+                   'utility': get_utility([item1, item2])
+                   })
 
 def search_view(request):
     global DATA_SEARCH
@@ -128,9 +171,8 @@ def search_view(request):
                                              end_area=end_area)
 
             if len(data['compare_no1']) > 0 and len(data['compare_no2']) > 0:
-                handle_compare_item(data['compare_no1'], data['compare_no2'])
-                return compare_view(request)
-    utility = get_utility()
+                return compare_view(request, data['compare_no1'], data['compare_no2'])
+    utility = get_utility(DATA_SEARCH)
     web_data = list(zip(PRICE_SHOW, DATA_SEARCH, utility))
     db_paginator = Paginator(web_data, 27)
     page_num = request.GET.get('page')
