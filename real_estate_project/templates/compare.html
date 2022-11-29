@@ -3,5 +3,107 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'search.css' %}">
-    21351351351231354153
+     <div class="container">
+        <div class="row justify-content-center">
+            <h3> So sánh </h3>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{item1.name}}</th>
+                        <th scope="col">{{item2.name}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"><h4>CHUNG</h4></th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Hình ảnh</th>
+                        <td>
+                            {% with item1.code|stringformat:"s" as house_code %}
+                            {% with "./images/"|add:house_code|add:".jpg" as image_path %}
+                            <img src="{% static image_path %}" width="188px" height="188px">
+                            {% endwith %}
+                            {% endwith %}
+                        </td>
+                        <td>
+                            {% with item2.code|stringformat:"s" as house_code %}
+                            {% with "./images/"|add:house_code|add:".jpg" as image_path %}
+                                <img src="{% static image_path %}" width="188px" height="188px">
+                            {% endwith %}
+                            {% endwith %}
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Giá</th>
+                        <td>{{price.0}}</td>
+                        <td>{{price.1}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Đơn giá đất</th>
+                        {% if item1.unit_price == None %}
+                            <td></td>
+                        {% else %}
+                            <td>{{item1.unit_price}}</td>
+                        {% endif %}
+                        {% if item2.unit_price == None %}
+                            <td></td>
+                        {% else %}
+                            <td>{{item2.unit_price}}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <th scope="row">Địa chỉ</th>
+                        <td>{{item1.address}}</td>
+                        <td>{{item2.address}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><h4>CHI TIẾT</h4></th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% for prop in property %}
+                    {% if prop.value0 != None or prop.value1 != None %}
+                    <tr>
+                        <th scope="row">{{prop.name}}</th>
+                        {% if prop.value0 == None %}
+                            <td></td>
+                        {% else %}
+                            <td>{{prop.value0}}</td>
+                        {% endif %}
+                        {% if prop.value1 == None %}
+                            <td></td>
+                        {% else %}
+                            <td>{{prop.value1}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    <tr style="">
+                        <th scope="row"><h4>TIỆN ÍCH</h4></th>
+                        <td>
+                            <ul style="list-style-type: none;">
+                               {% for u in utility.0 %}
+                               <li>{{ u }}</li>
+                               {% endfor %}
+                           </ul>
+                        </td>
+                        <td>
+                            <ul style="list-style-type: none;">
+                               {% for u in utility.1 %}
+                               <li>{{ u }}</li>
+                               {% endfor %}
+                           </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+     </div>
 {% endblock %}
