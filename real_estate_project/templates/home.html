@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3> Home Page </h3>
+{% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+
+<h3 style="margin-left: 100px"> Nhà đất TP. Hồ Chí Minh</h3>
+<div style="width: 800">
+    {{chart_5|safe}}
+    {{chart_2|safe}}
+    {{chart_1|safe}}
+    {{chart_4|safe}}
+    {{chart_3|safe}}
+</div>
+
 {% endblock %}
